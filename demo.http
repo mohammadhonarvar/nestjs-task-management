@@ -1,3 +1,29 @@
 @localUrl = http://localhost:3000
 
 GET {{localUrl}}/task/list HTTP/1.1
+
+###
+GET {{localUrl}}/task/list?search=Task 2 HTTP/1.1
+
+###
+GET {{localUrl}}/task/ceddf6b0-5cf8-11eb-a350-4db1f9862c40 HTTP/1.1
+
+###
+DELETE {{localUrl}}/task/be39c040-5cf9-11eb-acc4-c136dccf4da9 HTTP/1.1
+
+###
+PATCH {{localUrl}}/task/ece47ad0-5cfd-11eb-ac50-e353c32728f2/status HTTP/1.1
+Content-Type: application/json
+
+{
+  "status": "DONE"
+}
+
+###
+POST {{localUrl}}/task/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "New Task 3",
+  "description": "This is a new task 3"
+}
