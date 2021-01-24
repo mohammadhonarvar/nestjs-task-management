@@ -5,10 +5,3 @@ export enum TaskStatus {
 }
 
 export const allowedTaskStatusList = [TaskStatus.OPEN, TaskStatus.IN_PROGRESS, TaskStatus.DONE];
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
-}
