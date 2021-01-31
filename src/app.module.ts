@@ -2,9 +2,9 @@ import './config/app-config';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './mysql-structure/auth/auth.module';
 import { typeOrmConfig } from './config/typeorm.config';
-import { TaskModule } from './task/task.module';
+import { TaskModule } from './mysql-structure/task/task.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
