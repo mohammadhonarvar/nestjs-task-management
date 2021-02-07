@@ -14,6 +14,7 @@ export type TaskModel = Model<TaskDocument>;
 
 @Schema({
   collection: 'task',
+  versionKey: false,
 })
 export class Task {
   @Prop({ type: String, required: true })

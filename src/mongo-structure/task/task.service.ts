@@ -47,22 +47,15 @@ export class TaskService {
     }
   }
 
-  // async deleteTaskByID(id: number, user: User): Promise<void> {
-  //   const result = await this.taskModel.delete({
-  //     id,
-  //     userId: user.id,
-  //   });
+  async deleteTaskByID(id: string): Promise<void> {
+    await this.taskModel.findByIdAndDelete(id);
+  }
 
-  //   if (result.affected === 0) {
-  //     throw new NotFoundException(`Task with id "${id}" not found`);
-  //   }
-  // }
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<TaskDocument> {
+    const task = await this.getTaskByID(id);
+    task.status = status;
+    await task.save();
 
-  // async updateTaskStatus(id: number, status: TaskStatus, user: User): Promise<Task> {
-  //   const task = await this.getTaskByID(id, user);
-  //   task.status = status;
-  //   await task.save();
-
-  //   return task;
-  // }
+    return task;
+  }
 }
