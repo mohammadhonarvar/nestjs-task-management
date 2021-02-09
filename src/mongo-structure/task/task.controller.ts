@@ -23,7 +23,7 @@ import { TaskService } from './task.service';
 // import { AuthGuard } from '@nestjs/passport';
 import { TaskDocument } from './task.schema';
 import { TaskIdValidationPipe } from './pipe/task-id-validation.pipe';
-import { FilterTaskValidationPipe } from './pipe/filter-task.validation.pipe';
+import { FilterTaskValidationPipe } from './pipe/filter-task-validation.pipe';
 // import { GetUser } from '../auth/get-user.decorator';
 // import { User } from '../auth/user.entity';
 
