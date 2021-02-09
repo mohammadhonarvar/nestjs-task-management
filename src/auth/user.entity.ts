@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { hash } from 'bcrypt';
-import { Task } from '../task/task.entity';
+import { Task } from '../mysql-structure/task/task.entity';
 
 @Entity()
 @Unique(['username'])

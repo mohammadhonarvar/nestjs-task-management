@@ -4,6 +4,8 @@ import { TaskDocument, TaskModel } from './task.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateTaskDTO } from './dto/create-task.dto';
 import { TaskStatus } from './task-status.enum';
+import { FilterTaskDTO } from './dto/filter-task.dto';
+import { FilterQuery } from 'mongoose';
 // import { User } from '../auth/user.entity';
 
 @Injectable()
@@ -15,7 +17,30 @@ export class TaskService {
     private readonly taskModel: TaskModel,
   ) {}
 
-  async getTaskListArray(): Promise<TaskDocument[]> {
+  async getTaskListArray(filterTaskDTO: FilterTaskDTO): Promise<TaskDocument[]> {
+    const { search, status } = filterTaskDTO;
+    const filterQueryList: FilterQuery<TaskDocument>[] = [];
+
+    if (search) {
+      filterQueryList.push({
+        description: {
+          $regex: new RegExp(search, 'i'),
+        },
+      });
+    }
+
+    if (status) {
+      filterQueryList.push({
+        status: status as TaskStatus,
+      });
+    }
+
+    if (filterQueryList.length > 0) {
+      return await this.taskModel.find({
+        $and: filterQueryList,
+      });
+    }
+
     return await this.taskModel.find();
   }
 

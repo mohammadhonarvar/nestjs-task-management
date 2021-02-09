@@ -5,6 +5,8 @@ export class TaskStatusValidationPipe implements PipeTransform {
   readonly allowedStatusList = allowedTaskStatusList;
 
   transform(value: unknown) {
+    console.log('VALUE in TaskStatusValidationPipe: %o', value);
+
     if (typeof value !== 'string') {
       throw new BadRequestException(`Status have to be a string`);
     }

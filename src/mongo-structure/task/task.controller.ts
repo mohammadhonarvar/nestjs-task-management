@@ -9,13 +9,13 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  // Query,
+  Query,
   // UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateTaskDTO } from './dto/create-task.dto';
-// import { FilterTaskDTO } from './dto/filter-task.dto';
+import { FilterTaskDTO } from './dto/filter-task.dto';
 import { TaskStatusValidationPipe } from './pipe/task-status-validation.pipe';
 import { TaskStatus } from './task-status.enum';
 import { TaskService } from './task.service';
@@ -23,6 +23,7 @@ import { TaskService } from './task.service';
 // import { AuthGuard } from '@nestjs/passport';
 import { TaskDocument } from './task.schema';
 import { TaskIdValidationPipe } from './pipe/task-id-validation.pipe';
+import { FilterTaskValidationPipe } from './pipe/filter-task.validation.pipe';
 // import { GetUser } from '../auth/get-user.decorator';
 // import { User } from '../auth/user.entity';
 
@@ -34,8 +35,10 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Get('list')
-  getTaskList(): Promise<TaskDocument[]> {
-    return this.taskService.getTaskListArray();
+  getTaskList(
+    @Query(ValidationPipe, FilterTaskValidationPipe) filterTaskDTO: FilterTaskDTO,
+  ): Promise<TaskDocument[]> {
+    return this.taskService.getTaskListArray(filterTaskDTO);
   }
 
   @Get('/:id')
