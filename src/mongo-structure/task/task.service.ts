@@ -23,9 +23,18 @@ export class TaskService {
 
     if (search) {
       filterQueryList.push({
-        description: {
-          $regex: new RegExp(search, 'i'),
-        },
+        $or: [
+          {
+            description: {
+              $regex: new RegExp(search, 'i'),
+            },
+          },
+          {
+            title: {
+              $regex: new RegExp(search, 'i'),
+            },
+          },
+        ],
       });
     }
 
