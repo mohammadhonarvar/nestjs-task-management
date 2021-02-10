@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Model, Document } from 'mongoose';
+import { Model, Document, Schema as mongooseSchema } from 'mongoose';
 import { TaskStatus } from './task-status.enum';
 
 export interface TaskInterface {
   title: string;
   description: string;
   status: TaskStatus;
+  user: string;
 }
 
 export type TaskDocument = TaskInterface & Document;
@@ -29,6 +30,12 @@ export class Task {
     default: TaskStatus.OPEN,
   })
   status: string;
+
+  @Prop({
+    type: mongooseSchema.Types.ObjectId,
+    ref: 'Task',
+  })
+  user: string;
 }
 
 export const taskSchema = SchemaFactory.createForClass(Task);

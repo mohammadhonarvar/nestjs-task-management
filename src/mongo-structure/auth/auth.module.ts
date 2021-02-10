@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 import { JWTStrategy } from './jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
 import { userSchema } from './user.schema';
-
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),

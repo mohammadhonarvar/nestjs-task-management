@@ -2,7 +2,6 @@ import { hash } from 'bcrypt';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Model, Document } from 'mongoose';
 import { ConflictException, InternalServerErrorException } from '@nestjs/common';
-// import { TaskInterface } from '../task/task.schema';
 
 export interface UserInterface {
   username: string;
@@ -39,13 +38,15 @@ export class User {
 export const userSchema = SchemaFactory.createForClass(User);
 
 userSchema.methods.validatePassword = async function (password: string): Promise<boolean> {
-  const user = this as UserDocument;
+  const user = (this as unknown) as UserDocument;
+  // console.info('validatePassword: %o', user);
   const hashPassword = await hash(password, user.salt);
   return hashPassword === user.password;
 };
 
 userSchema.post('save', function (error, doc, next) {
-  console.log('ERROR IN SCHEMA: %o', error);
+  console.error('ERROR IN SCHEMA: %o', error);
+
   if (error.name === 'MongoError' && error.code === 11000) {
     throw new ConflictException(`Username: ('${doc.username}') is exist now`);
     // next(new Error('email must be unique'));

@@ -4,7 +4,6 @@ import { AuthService } from './auth.service';
 import { UserCredentialsDTO } from './dto/user-credentials.dto';
 import { GetUser } from './get-user.decorator';
 import { User } from './user.schema';
-
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
