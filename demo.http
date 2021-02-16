@@ -1,0 +1,60 @@
+@localUrl = http://localhost:3000
+@user1Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1IRjEiLCJpYXQiOjE2MTE2MTMxMzEsImV4cCI6MTYxMTYxNjczMX0.WotQs_PS0r1XE8jjjPDVPF66DPKdG_QESMqgzc6S2wE
+@user2Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1IRjIiLCJpYXQiOjE2MTE2MTMzNDAsImV4cCI6MTYxMTYxNjk0MH0.Uk91_Z1cY2dVxoZXS-Ux7tEySVM9-_ACJFnfIwmb89g
+
+GET {{localUrl}}/task/list HTTP/1.1
+Authorization: Bearer {{user1Token}}
+
+###
+GET {{localUrl}}/task/list?search=Task 2 HTTP/1.1
+Authorization: Bearer {{user1Token}}
+
+###
+GET {{localUrl}}/task/1 HTTP/1.1
+Authorization: Bearer {{user1Token}}
+
+###
+DELETE {{localUrl}}/task/3 HTTP/1.1
+Authorization: Bearer {{user2Token}}
+
+###
+PATCH {{localUrl}}/task/3/status HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{user2Token}}
+
+{
+  "status": "DONE"
+}
+
+###
+POST {{localUrl}}/task/create HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{user2Token}}
+
+{
+  "title": "MHF2 new task",
+  "description": "This is a MHF2 new task"
+}
+
+###
+POST {{localUrl}}/auth/sign-up HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "MHF2",
+  "password": "12345678"
+}
+
+###
+POST {{localUrl}}/auth/sign-in HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "MHF2",
+  "password": "12345678"
+}
+
+###
+POST {{localUrl}}/auth/test HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1IRjEiLCJpYXQiOjE2MTE2MTA4NDksImV4cCI6MTYxMTYxNDQ0OX0.9xQikwpFSSQDnP6Nu4sT1YbgfYq7NSntMb_rREnj37o
