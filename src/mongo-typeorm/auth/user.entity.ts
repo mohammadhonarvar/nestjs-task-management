@@ -1,12 +1,12 @@
-import { Column, Entity, ObjectIdColumn, Unique } from 'typeorm';
+import { BaseEntity, Column, Entity, ObjectIdColumn, Unique } from 'typeorm';
 import { hash } from 'bcrypt';
 // import { Task } from '../task/task.entity';
 
 @Entity()
 @Unique(['username'])
-export class User {
+export class User extends BaseEntity {
   @ObjectIdColumn()
-  id: number;
+  id: string;
 
   @Column()
   username: string;

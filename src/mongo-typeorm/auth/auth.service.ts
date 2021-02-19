@@ -1,7 +1,7 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from 'src/mysql-structure/auth/user.repository';
+import { UserRepository } from './user.repository';
 import { UserCredentialsDTO } from './dto/user-credentials.dto';
 import { JWTPayloadInterface } from './jwt-payload.interface';
 import { User } from './user.entity';
@@ -17,6 +17,7 @@ export class AuthService {
   ) {}
 
   async signUp(userCredentials: UserCredentialsDTO): Promise<void> {
+    // console.log('USERREPO: %o', this.userRepository);
     return this.userRepository.signUp(userCredentials);
   }
 

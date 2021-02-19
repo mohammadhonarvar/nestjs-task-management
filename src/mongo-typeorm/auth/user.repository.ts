@@ -1,11 +1,11 @@
 import { ConflictException, InternalServerErrorException } from '@nestjs/common';
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, MongoRepository } from 'typeorm';
 import { UserCredentialsDTO } from './dto/user-credentials.dto';
 import { User } from './user.entity';
 import { genSalt, hash } from 'bcrypt';
 
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
+export class UserRepository extends MongoRepository<User> {
   async signUp(userCredentials: UserCredentialsDTO) {
     const { username, password } = userCredentials;
 
@@ -15,7 +15,7 @@ export class UserRepository extends Repository<User> {
     newUser.password = await this.hashPassword(password, newUser.salt);
 
     try {
-      await this.save(newUser);
+      await newUser.save();
     } catch (error) {
       console.log(error);
       if (error.name === 'MongoError' && error.code === 11000) {

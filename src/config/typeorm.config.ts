@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { User } from 'src/mongo-typeorm/auth/user.entity';
+// import { User } from '../mongo-typeorm/auth/user.entity';
+// import { Task } from '../mongo-typeorm/task/task.entity';
 
 export const typeOrmMysqlConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -14,10 +15,8 @@ export const typeOrmMysqlConfig: TypeOrmModuleOptions = {
 
 export const typeOrmMongodbConfig: TypeOrmModuleOptions = {
   type: 'mongodb',
-  host: process.env.MONGO_DB_URI_LOCAL,
-  username: process.env.ME_CONFIG_MONGO_DB_USERNAME,
-  password: process.env.ME_CONFIG_MONGO_DB_PASSWORD,
+  host: 'localhost',
   database: process.env.MONGO_DB_NAME,
-  entities: [User],
+  entities: [__dirname + '/../mongo-typeorm/**/*.entity.js'],
   synchronize: process.env.MONGO_DB_SYNCHRONIZE === 'TRUE' ? true : false,
 };

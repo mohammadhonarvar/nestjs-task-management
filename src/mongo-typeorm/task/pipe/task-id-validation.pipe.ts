@@ -7,7 +7,6 @@ export class TaskIdValidationPipe implements PipeTransform {
       throw new BadRequestException(`Id have to be a string`);
     }
 
-    value = value.toUpperCase();
     if (!this.isIdValid(value)) {
       throw new BadRequestException(`'${value}' is an invalid Id`);
     }

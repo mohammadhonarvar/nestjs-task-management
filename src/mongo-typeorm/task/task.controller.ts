@@ -17,13 +17,12 @@ import { FilterTaskDTO } from './dto/filter-task.dto';
 import { TaskStatusValidationPipe } from './pipe/task-status-validation.pipe';
 import { TaskStatus } from './task-status.enum';
 import { TaskService } from './task.service';
-// import { Task } from './task.schema';
 import { AuthGuard } from '@nestjs/passport';
-import { TaskDocument } from './task.schema';
+import { Task } from './task.entity';
 import { TaskIdValidationPipe } from './pipe/task-id-validation.pipe';
 import { FilterTaskValidationPipe } from './pipe/filter-task-validation.pipe';
 import { GetUser } from '../auth/get-user.decorator';
-import { UserDocument } from '../auth/user.schema';
+import { User } from '../auth/user.entity';
 
 @Controller('task')
 @UseGuards(AuthGuard())
@@ -35,31 +34,25 @@ export class TaskController {
   @Get('list')
   getTaskList(
     @Query(ValidationPipe, FilterTaskValidationPipe) filterTaskDTO: FilterTaskDTO,
-    @GetUser() user: UserDocument,
-  ): Promise<TaskDocument[]> {
+    @GetUser() user: User,
+  ): Promise<Task[]> {
     this.logger.debug(`User ${user.username} get all his tasks, filters: ${JSON.stringify(filterTaskDTO)}`);
     return this.taskService.getTaskListArray(filterTaskDTO, user);
   }
 
   @Get('/:id')
-  getTaskByID(
-    @Param('id', TaskIdValidationPipe) taskId: string,
-    @GetUser() user: UserDocument,
-  ): Promise<TaskDocument> {
+  getTaskByID(@Param('id', TaskIdValidationPipe) taskId: string, @GetUser() user: User): Promise<Task> {
     return this.taskService.getTaskByID(taskId, user);
   }
 
   @Post('create')
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDTO, @GetUser() user: UserDocument): Promise<TaskDocument> {
+  createTask(@Body() createTaskDto: CreateTaskDTO, @GetUser() user: User): Promise<Task> {
     return this.taskService.createTask(createTaskDto, user);
   }
 
   @Delete('/:id')
-  deleteTaskByID(
-    @Param('id', TaskIdValidationPipe) taskId: string,
-    @GetUser() user: UserDocument,
-  ): Promise<void> {
+  deleteTaskByID(@Param('id', TaskIdValidationPipe) taskId: string, @GetUser() user: User): Promise<void> {
     return this.taskService.deleteTaskByID(taskId, user);
   }
 
@@ -67,8 +60,8 @@ export class TaskController {
   updateTaskStatus(
     @Param('id', TaskIdValidationPipe) taskId: string,
     @Body('status', TaskStatusValidationPipe) status: TaskStatus,
-    @GetUser() user: UserDocument,
-  ): Promise<TaskDocument> {
+    @GetUser() user: User,
+  ): Promise<Task> {
     return this.taskService.updateTaskStatus(taskId, status, user);
   }
 }

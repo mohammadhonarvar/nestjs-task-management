@@ -8,7 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './mongo-typeorm/auth/auth.module';
 import { typeOrmMongodbConfig } from './config/typeorm.config';
 // import { TaskModule } from './mysql-structure/task/task.module';
-import { TaskModule } from './mongo-structure/task/task.module';
+// import { TaskModule } from './mongo-structure/task/task.module';
+import { TaskModule } from './mongo-typeorm/task/task.module';
+
 @Module({
   imports: [
     // TypeOrmModule.forRoot(typeOrmMysqlConfig),
