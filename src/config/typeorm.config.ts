@@ -4,7 +4,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeOrmMysqlConfig: TypeOrmModuleOptions = {
   type: 'mysql',
-  host: process.env.MYSQL_HOST,
+  host: process.env.DB_HOST_LOCAL,
   port: parseInt(process.env.MYSQL_PORT),
   username: process.env.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD,
@@ -15,8 +15,8 @@ export const typeOrmMysqlConfig: TypeOrmModuleOptions = {
 
 export const typeOrmMongodbConfig: TypeOrmModuleOptions = {
   type: 'mongodb',
-  host: 'localhost',
+  host: process.env.DB_HOST_LOCAL,
   database: process.env.MONGO_DB_NAME,
-  entities: [__dirname + '/../mongo-typeorm/**/*.entity.js'],
+  entities: [__dirname + '/../**/*.entity.js'],
   synchronize: process.env.MONGO_DB_SYNCHRONIZE === 'TRUE' ? true : false,
 };
